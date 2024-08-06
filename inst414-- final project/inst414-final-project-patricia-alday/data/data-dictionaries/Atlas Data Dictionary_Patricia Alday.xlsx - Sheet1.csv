@@ -1,0 +1,9 @@
+Column Name,Description,Data Type ,Ex. 
+Census Tract ,census tract identifier associated with region,string,101010101
+Urban,"urban = 1, rural = 0 ",integer ,1
+GroceryStores,grocery store per 1000 residents ,float,0.5
+Supercenters,supercenters per 1000 residents ,float ,0.3
+ConvenienceStores,convenience stores per 1000 residents ,float ,2
+SpecialtyStores ,specialty stores per 1000 residents ,float ,0.4
+SNAPAuthorizedStores,snap stores per 1000 residents ,float ,0.4
+FoodInsecurityRate,percentage of population that is food insecure ,float ,15%
