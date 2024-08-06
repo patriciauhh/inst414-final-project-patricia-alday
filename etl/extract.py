@@ -1,27 +1,35 @@
-#Extract
+import pandas as pd
+import os
+import logging
 
-# Include a .py for this stage and write the code to extract data from your identified data sources. 
-# This might involve making API requests, web scraping, querying databases, or loading flat files.
-# Store the raw extracted data its own directory in ` data/`
+# Configure logging
+logging.basicConfig(filename='data/extract.log', level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s - %(message)s')
 
-import pandas as pd 
+# Ensure the data directory exists
+os.makedirs('data/processed', exist_ok=True)
 
+def extract_data():
+    """
+    Reads CSV files from the datasets directory and writes them to the processed data directory.
+    """
+    try:
+        logging.info('Starting data extraction.')
+        acs_data_df = pd.read_csv('datasets/ACS_Data.csv')
+        atlas_data_df = pd.read_csv('datasets/Atlas_Data.csv')
+        
+        acs_data_df.to_csv('data/processed/processed_ACS_Data.csv', index=False)
+        atlas_data_df.to_csv('data/processed/processed_Atlas_Data.csv', index=False)
+        
+        logging.info('Data extracted successfully.')
+    except FileNotFoundError as e:
+        logging.error(f"File not found: {e}")
+    except Exception as e:
+        logging.error(f"An error occurred: {e}")
 
-# exctract data from the csv files and puts the processed data into a csv
-# i'm not sure if these file paths are correct, bc it's not loading in there 
-
-def extract_data(): 
-    ''' 
-    reading csv files based on the path and 
-    putting it into a processed file 
-    '''
-    acs_data_df = pd.read_csv('datasets/ACS_Data.csv')
-    Atlast_data_df = pd.read_csv('datasets/Atlast_data_df')
-    
-    Atlast_data_df.to_csv('data/processed/processed_Atlas_Data.csv', index=False)
-    acs_data_df.to_csv('data/processed/processed_ACS_raw.csv', index=False)
-    
-    print("Data extracted.")
-    
 if __name__ == "__main__":
     extract_data()
+    
+    
+    
+####
