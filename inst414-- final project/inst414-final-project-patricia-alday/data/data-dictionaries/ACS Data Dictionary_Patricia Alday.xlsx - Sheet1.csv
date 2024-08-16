@@ -1,6 +1,0 @@
-Column Name,Description,Data Type ,Ex. 
-GeoID,unique id for geo area ,string,10000034532
-RegionName,name of region,string,"Census Tract, Montgomery County, Maryland "
-Income ,median household income ,float,53000
-PovertyRate,poverty rate ,float,12%
-EducationLevel,education level based on the number of population  with a bachelor's degree or higher ,float ,13%
