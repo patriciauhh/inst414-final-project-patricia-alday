@@ -3,3 +3,5 @@ numpy
 matplotlib
 requests
 Seaborn 
+scikit-learn
+geopandas

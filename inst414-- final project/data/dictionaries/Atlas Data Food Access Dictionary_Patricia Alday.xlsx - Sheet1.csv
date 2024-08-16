@@ -1,0 +1,8 @@
+Column Name,Description,Data Type ,Ex. 
+Census Tract ,census tract identifier associated with region,string,101010101
+Urban,"urban = 1, rural = 0 ",integer ,1
+State ,"state, maryland ",string ,Maryland
+County,specifies the county in maryland ,string,Montgomery County
+TractSNAP,number of people who use SNAP in the region,integer ,35
+MedianFamilyIncome,Average family income in the county ,integer ,"33,243"
+PovertyRate ,percantage of population in specific county below poverty line ,integer ,12%

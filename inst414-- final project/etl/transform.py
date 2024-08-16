@@ -12,20 +12,19 @@ def clean_foodaccess_data(df):
     try:
         logging.info('Cleaning food access data.')
         
-        # Handle missing values with .loc to avoid SettingWithCopyWarning
+        # Handle missing values 
         df.loc[:, 'PovertyRate'] = df['PovertyRate'].fillna(0)
         df.loc[:, 'MedianFamilyIncome'] = df['MedianFamilyIncome'].fillna(0)
         df.loc[:, 'LowIncomeTracts'] = df['LowIncomeTracts'].fillna(0)
         df.loc[:, 'TractSNAP'] = df['TractSNAP'].fillna(0)
         
-        # Select relevant columns (ensure these columns exist in your DataFrame)
+        # Select relevant columns
         relevant_columns = [
             'CensusTract', 'State', 'County', 'Urban', 'PovertyRate', 
             'MedianFamilyIncome', 'LowIncomeTracts', 
             'LATracts_half', 'TractSNAP',
         ]
         
-        # Use .loc[] to avoid SettingWithCopyWarning
         df = df.loc[:, relevant_columns]
         
         # Remove duplicates
@@ -36,7 +35,6 @@ def clean_foodaccess_data(df):
     except Exception as e:
         logging.error(f"An error occurred while cleaning food access data: {e}")
         raise
-
 
 def clean_foodenvironment_data(df):
     """
@@ -79,8 +77,8 @@ def merge_datasets(df_access, df_environment):
 
 if __name__ == "__main__":
     # Load the data into DataFrames
-    foodaccess_df = pd.read_csv('data/foodaccess.csv')
-    foodenvironment_df = pd.read_csv('data/foodenvironment.csv')
+    foodaccess_df = pd.read_csv('data/processed/processed_foodaccess.csv')
+    foodenvironment_df = pd.read_csv('data/processed/processed_foodenvironment.csv')
 
     # Clean the data
     cleaned_access_df = clean_foodaccess_data(foodaccess_df)

@@ -1,6 +1,9 @@
 import pandas as pd
-from transform import clean_foodaccess_data, clean_foodenvironment_data, merge_datasets
 import logging
+from etl.transform import clean_foodaccess_data
+from etl.transform import clean_foodenvironment_data
+from etl.transform import merge_datasets
+
 
 # Configure logging
 logging.basicConfig(filename='data/load.log', level=logging.INFO,

@@ -1,45 +1,56 @@
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
-import matplotlib.pyplot as plt
 import pandas as pd
-import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import os
 
-# Load cleaned data
-atlas_df = pd.read_csv('data/processed/cleaned_Atlas_Data.csv')
+# Load the dataset
+df = pd.read_csv('data/processed/final_food_data.csv')
 
-features = ['GroceryStores', 'Supercenters', 'ConvenienceStores', 'SpecialtyStores', 'SNAPAuthorizedStores']
-target = 'FoodInsecurityRate'
-X, y = atlas_df[features], atlas_df[target]
+# Ensure directories exist
+os.makedirs('vis', exist_ok=True)
 
-# Train-Test Split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# the numeric columns along with 'County'
+numeric_cols = ['MedianFamilyIncome', 'PovertyRate', 'TractSNAP']
+grouped_df = df.groupby('County')[numeric_cols].mean().reset_index()
 
-#Model Training
-model = LinearRegression()
-model.fit(X_train, y_train)
+# columns present in the dataset
+if 'County' in grouped_df.columns and 'MedianFamilyIncome' in grouped_df.columns and 'PovertyRate' in grouped_df.columns and 'TractSNAP' in grouped_df.columns:
+    
+    # Set the style for the plots
+    sns.set(style="whitegrid")
 
-# Step 4: Model Evaluation
-y_pred = model.predict(X_test)
-mse = mean_squared_error(y_test, y_pred)
-r2 = r2_score(y_test, y_pred)
+    # Plot Average Income per County
+    plt.figure(figsize=(10, 6))
+    sns.barplot(x='County', y='MedianFamilyIncome', data=grouped_df, palette='viridis')
+    plt.xticks(rotation=45, ha='right')
+    plt.title('Average Income per County')
+    plt.xlabel('County')
+    plt.ylabel('Median Family Income ($)')
+    plt.tight_layout()
+    plt.savefig('vis/average_income_per_county.png')
+    plt.show()
 
+    # Plot Poverty Rate per County
+    plt.figure(figsize=(10, 6))
+    sns.barplot(x='County', y='PovertyRate', data=grouped_df, palette='magma')
+    plt.xticks(rotation=45, ha='right')
+    plt.title('Poverty Rate per County')
+    plt.xlabel('County')
+    plt.ylabel('Poverty Rate (%)')
+    plt.tight_layout()
+    plt.savefig('vis/poverty_rate_per_county.png')
+    plt.show()
 
-# Print evaluation metrics
-print(f"Mean Squared Error: {mse}")
-print(f"R-squared: {r2}")
-#
-## Visualize Results and Regression Line
-plt.figure(figsize=(10, 6))
-plt.scatter(y_test, y_pred, label='Predicted vs Actual')
-plt.xlabel("Actual Food Insecurity Rate")
-plt.ylabel("Predicted Food Insecurity Rate")
-plt.title("Actual vs Predicted Food Insecurity Rate")
-plt.plot([min(y_test), max(y_test)], [min(y_test), max(y_test)], color='red', label='Regression Line')  # Regression line
-plt.legend()
-plt.savefig('vis/actual_vs_predicted.png')
-plt.show()
+    # Plot SNAP Usage per County
+    plt.figure(figsize=(10, 6))
+    sns.barplot(x='County', y='TractSNAP', data=grouped_df, palette='coolwarm')
+    plt.xticks(rotation=45, ha='right')
+    plt.title('SNAP Usage per County')
+    plt.xlabel('County')
+    plt.ylabel('SNAP Participants')
+    plt.tight_layout()
+    plt.savefig('vis/snap_usage_per_county.png')
+    plt.show()
 
-
-
-##
+else:
+    print("One or more columns are missing in the dataset.")

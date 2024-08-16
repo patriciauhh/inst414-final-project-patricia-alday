@@ -2,11 +2,11 @@ import pandas as pd
 import os
 import logging
 
-# Configure logging
+# configure logging
 logging.basicConfig(filename='data/extract.log', level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
-# Ensure the data directory exists
+# ensure the data directory exists
 os.makedirs('data/processed', exist_ok=True)
 
 def extract_data():
